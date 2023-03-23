@@ -1,11 +1,11 @@
 FROM golang:1.20.2-bullseye as builder
-WORKDIR /hello
+WORKDIR /webapp
 COPY . ./
-RUN go build -o hellodocker
+RUN go build -o webapp
 
 FROM ubuntu:20.04
-WORKDIR /hello
-COPY --from=builder /hello/config/ config/
-COPY --from=builder /hello/hellodocker ./
-CMD ["./hellodocker"]
+WORKDIR /webapp
+COPY --from=builder /webapp/config/ config/
+COPY --from=builder /webapp/webapp ./
+CMD ["./webapp"]
 EXPOSE 3000
